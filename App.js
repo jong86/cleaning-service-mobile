@@ -9,12 +9,14 @@ export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
+      isLoggedIn: false,
       authToken: null,
       currentView: 'JobsIndex'
     }
 
     this.setAuthToken = this.setAuthToken.bind(this)
     this.getAuthToken = this.getAuthToken.bind(this)
+    this.clearAuthToken = this.clearAuthToken.bind(this)
 
     this.showCurrentView = this.showCurrentView.bind(this)
   }
@@ -31,7 +33,7 @@ export default class App extends React.Component {
     // Save token in storage
     try {
       await AsyncStorage.setItem('@Storage:authToken', authToken)
-      this.setState({ authToken })
+      this.setState({ isLoggedIn: true })
     } catch (error) {
       // console.warn("error setting", error)
     }
@@ -41,11 +43,21 @@ export default class App extends React.Component {
     // Get token from storage
     try {
       const authToken = await AsyncStorage.getItem('@Storage:authToken')
-      if (authToken !== null){
-        this.setState({ authToken })
+      if (authToken !== null) {
+        this.setState({ isLoggedIn: true, authToken: authToken })
       }
     } catch (error) {
       // console.warn("error getting", error)
+    }
+  }
+
+  async clearAuthToken() {
+    // Remove token from storage
+    try {
+      const authToken = await AsyncStorage.removeItem('@Storage:authToken')
+      this.setState({ isLoggedIn: false })
+    } catch (error) {
+      // console.warn("error clearing", error)
     }
   }
 
@@ -63,21 +75,25 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { authToken } = this.state
-    const { setAuthToken, showCurrentView } = this
+    const { isLoggedIn } = this.state
+    const { setAuthToken, clearAuthToken, showCurrentView } = this
 
     return (
       <View style={styles.outerContainer}>
-        { !authToken &&
+        { !isLoggedIn &&
           <Login setAuthToken={setAuthToken}/>
         }
-        { authToken &&
+        { isLoggedIn &&
           <View style={styles.innerContainer}>
             <View style={styles.statusBarSpacer}/>
+
             <ScrollView style={styles.scrollView}>
               { showCurrentView() }
             </ScrollView>
-            <Footer/>
+
+            <Footer
+              clearAuthToken={clearAuthToken}
+            />
           </View>
         }
       </View>

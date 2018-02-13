@@ -8,7 +8,7 @@ export default class Login extends React.Component {
   constructor() {
     super()
     this.state = {
-      email: 'e@e.com',
+      email: 'roy_boyer@yahoo.com',
       password: 'password',
     }
 
@@ -27,7 +27,7 @@ export default class Login extends React.Component {
       this.props.setAuthToken(authToken)
 
     } catch (error) {
-      console.warn(error)
+      // console.warn(error)
     }
   }
 

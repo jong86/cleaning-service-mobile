@@ -1,11 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native';
 
 export default class Footer extends React.Component {
+  constructor() {
+    super()
+
+    this.logout = this.logout.bind(this)
+  }
+
+
+  logout() {
+    this.props.clearAuthToken()
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>This is the footer</Text>
+        <TouchableWithoutFeedback onPress={this.logout}>
+          <View>
+            <Text>
+              Log out
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
