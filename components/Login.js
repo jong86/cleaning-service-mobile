@@ -22,9 +22,9 @@ export default class Login extends React.Component {
         password: this.state.password,
       })
       const response = await request
-      const token = response.data.auth_token
+      const authToken = response.data.auth_token
 
-      alert(token)
+      this.props.setAuthToken(authToken)
 
     } catch (error) {
       console.warn(error)
