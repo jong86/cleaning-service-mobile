@@ -1,13 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, ScrollView, Text, View } from 'react-native'
+import Footer from './components/Footer.js'
+import Login from './components/Login.js'
 
 export default class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      loggedIn: false,
+    }
+  }
+
   render() {
+    const { loggedIn } = this.state
+
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Login/>
+        { loggedIn && <Footer/> }
       </View>
     );
   }
