@@ -2,19 +2,33 @@ import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
+import axios from 'axios'
+
 export default class Login extends React.Component {
   constructor() {
     super()
     this.state = {
-      username: 'username',
+      email: 'e@e.com',
       password: 'password',
     }
 
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onSubmit() {
-    alert(`You submitted:\n${this.state.username}\nand\n${this.state.password}`)
+  async onSubmit() {
+    try {
+      const request = axios.post('http://192.168.1.69:3000/authenticate', {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      const response = await request
+      const token = response.data.auth_token
+
+      alert(token)
+
+    } catch (error) {
+      console.warn(error)
+    }
   }
 
   render() {
@@ -25,12 +39,12 @@ export default class Login extends React.Component {
         </Text>
 
         <Text style={styles.label}>
-          Username
+          E-mail
         </Text>
         <TextInput
           style={styles.textInput}
-          onChangeText={(username) => this.setState({username})}
-          value={this.state.username}
+          onChangeText={(email) => this.setState({email})}
+          value={this.state.email}
         />
 
         <Text style={styles.label}>
