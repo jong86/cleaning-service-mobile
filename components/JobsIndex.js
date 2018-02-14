@@ -45,9 +45,8 @@ class JobsIndex extends React.Component {
   }
 
 
-  handlePressJob(e, uid) {
-    e.persist()
-    console.log(this.refs[uid].props['data-id'])
+  handlePressJob(jobId) {
+    console.log(jobId)
   }
 
 
@@ -55,14 +54,10 @@ class JobsIndex extends React.Component {
     return (
       <View style={styles.jobsList}>
         { this.state.jobsList.map(job => {
-          const uid = uuid()
-
           return (
             <TouchableWithoutFeedback
-              key={uid}
-              ref={uid}
-              onPress={(e) => this.handlePressJob(e, uid)}
-              data-id={job.id}
+              key={uuid()}
+              onPress={() => this.handlePressJob(job.id)}
             >
               <View style={styles.job}>
                 <View style={styles.jobRow}>
