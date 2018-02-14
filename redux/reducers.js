@@ -17,6 +17,13 @@ const reducers = (state = initialState, action) => {
         currentView: newView,
       }
 
+    case ('SET_JOBS_LIST'):
+      const { newJobsList } = action
+      return {
+        ...state,
+        jobsList: newJobsList,
+      }
+
     default:
       return { ...state }
   }

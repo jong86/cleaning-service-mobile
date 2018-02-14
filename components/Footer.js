@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-import action from '../redux/action.js'
+import { action } from '../redux/action.js'
 import { connect } from 'react-redux'
 
 
@@ -11,6 +11,7 @@ class Footer extends React.Component {
     super()
 
     this.logout = this.logout.bind(this)
+    this.toIndexPage = this.toIndexPage.bind(this)
   }
 
 
@@ -18,10 +19,19 @@ class Footer extends React.Component {
     this.props.clearAuthToken()
   }
 
+  toIndexPage() {
+    this.props.setCurrentView('JobsIndex')
+  }
+
 
   render() {
     return (
       <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={this.toIndexPage}>
+          <View style={styles.button}>
+            <Ionicons name="ios-list-box-outline" size={32} color="black" />
+          </View>
+        </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={this.logout}>
           <View style={styles.button}>
             <Ionicons name="ios-log-out" size={32} color="black" />
@@ -62,10 +72,11 @@ const styles = StyleSheet.create({
     borderTopColor: 'gainsboro',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   button: {
-    backgroundColor: 'gainsboro',
+    backgroundColor: 'steelblue',
     height: '100%',
     padding: 8,
   }

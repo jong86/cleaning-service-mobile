@@ -1,6 +1,8 @@
-export const action = (type, options) => {
+const action = (type, options) => {
   return {
     type: type,
     ...options
   }
 }
+
+export { action }

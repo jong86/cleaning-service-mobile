@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import Footer from './components/Footer.js'
 import Login from './components/Login.js'
 import JobsIndex from './components/JobsIndex.js'
+import JobShow from './components/JobShow.js'
 
 
 
@@ -32,9 +33,11 @@ class App extends React.Component {
   }
 
 
+
   /*=================
     Authentication
   ================*/
+
   async setAuthToken(authToken) {
     // Save token in storage
     try {
@@ -68,15 +71,17 @@ class App extends React.Component {
   }
 
 
+
   /*============
     Rendering
   ===========*/
+
   showCurrentView() {
     const { authToken } = this.state
     const { currentView } = this.props
     switch (currentView) {
       case 'JobsIndex': return <JobsIndex authToken={authToken}/>
-      case 'JobShow': return null
+      case 'JobShow': return <JobShow authToken={authToken}/>
       case 'Profile': return null
     }
   }
@@ -123,6 +128,7 @@ App = connect(mapStateToProps)(App)
 /*=================================================
   Root component for wrapping App inside Provider
 =================================================*/
+
 class Root extends React.Component {
   render() {
     return (
@@ -137,6 +143,9 @@ export default Root
 
 
 
+/*========
+  Styles
+========*/
 
 const styles = StyleSheet.create({
   outerContainer: {

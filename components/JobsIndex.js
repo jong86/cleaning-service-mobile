@@ -5,7 +5,7 @@ import axios from 'axios'
 import uuid from 'uuidv4'
 import moment from 'moment'
 
-import action from '../redux/action.js'
+import { action } from '../redux/action.js'
 import { connect } from 'react-redux'
 
 import ReactNativeComponentTree from 'react-native/Libraries/Renderer/shims/ReactNativeComponentTree';
@@ -14,9 +14,6 @@ import ReactNativeComponentTree from 'react-native/Libraries/Renderer/shims/Reac
 class JobsIndex extends React.Component {
   constructor() {
     super()
-    this.state = {
-      jobsList: [],
-    }
 
     this.fetchJobsList = this.fetchJobsList.bind(this)
     this.renderJobsList = this.renderJobsList.bind(this)
@@ -36,8 +33,8 @@ class JobsIndex extends React.Component {
 
       const request = axios.get('http://192.168.1.69:3000/employee/jobs', config)
       const response = await request
-      // alert(JSON.stringify(response.data.jobs))
-      this.setState({ jobsList: response.data.jobs })
+
+      this.props.setJobsList(response.data.jobs)
 
     } catch (error) {
       console.warn(error)
@@ -46,14 +43,24 @@ class JobsIndex extends React.Component {
 
 
   handlePressJob(jobId) {
+    const { setJobIdSelected, setCurrentView, jobIdSelected } = this.props
     console.log(jobId)
+
+    // Set jobIdSelected to this one
+    setJobIdSelected(jobId)
+
+    // Set currentView to JobShow
+    setCurrentView('JobShow')
+
   }
+
+
 
 
   renderJobsList() {
     return (
       <View style={styles.jobsList}>
-        { this.state.jobsList.map(job => {
+        { this.props.jobsList.map(job => {
           return (
             <TouchableWithoutFeedback
               key={uuid()}
@@ -109,17 +116,21 @@ class JobsIndex extends React.Component {
 function mapStateToProps(state) {
   return {
     jobIdSelected: state.jobIdSelected,
+    jobsList: state.jobsList,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     setJobIdSelected: (newJobIdSelected) => {
-      dispatch(action('SET_JOB_ID_SELECTED', { newJobIdSelected }))
+      dispatch(action('SET_JOB_ID_SELECTED', { newJobIdSelected: newJobIdSelected }))
     },
     setCurrentView: (newView) => {
-      dispatch(action('SET_CURRENT_VIEW', { newView }))
-    }
+      dispatch(action('SET_CURRENT_VIEW', { newView: newView }))
+    },
+    setJobsList: (newJobsList) => {
+      dispatch(action('SET_JOBS_LIST', { newJobsList: newJobsList }))
+    },
   }
 }
 
