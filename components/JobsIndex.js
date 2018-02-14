@@ -5,7 +5,12 @@ import axios from 'axios'
 import uuid from 'uuidv4'
 import moment from 'moment'
 
-export default class JobsIndex extends React.Component {
+import action from '../redux/action.js'
+import { connect } from 'react-redux'
+
+
+
+class JobsIndex extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -86,6 +91,26 @@ export default class JobsIndex extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    jobIdSelected: state.jobIdSelected,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setJobIdSelected: (jobIdSelected) => {
+      dispatch(action('SET_JOB_ID_SELECTED', { jobIdSelected }))
+    },
+  }
+}
+
+JobsIndex = connect(mapStateToProps, mapDispatchToProps)(JobsIndex)
+
+export default JobsIndex
+
+
 
 const styles = StyleSheet.create({
   container: {

@@ -1,17 +1,23 @@
 import React from 'react'
 import { AsyncStorage } from 'react-native'
 import { Platform, StyleSheet, ScrollView, StatusBar, Text, View } from 'react-native'
+
+import { Provider } from 'react-redux'
+import store from './redux/store'
+import { connect } from 'react-redux'
+
 import Footer from './components/Footer.js'
 import Login from './components/Login.js'
 import JobsIndex from './components/JobsIndex.js'
 
-export default class App extends React.Component {
+
+
+class App extends React.Component {
   constructor() {
     super()
     this.state = {
       isLoggedIn: false,
       authToken: null,
-      currentView: 'JobsIndex',
     }
 
     this.setAuthToken = this.setAuthToken.bind(this)
@@ -66,7 +72,8 @@ export default class App extends React.Component {
     Rendering
   ===========*/
   showCurrentView() {
-    const { authToken, currentView } = this.state
+    const { authToken } = this.state
+    const { currentView } = this.props
     switch (currentView) {
       case 'JobsIndex': return <JobsIndex authToken={authToken}/>
       case 'JobShow': return null
@@ -100,6 +107,31 @@ export default class App extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    currentView: state.currentView,
+    store: store,
+  }
+}
+
+App = connect(mapStateToProps)(App)
+
+
+class Root extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    )
+  }
+}
+
+export default Root
+
+
+
 
 const styles = StyleSheet.create({
   outerContainer: {
