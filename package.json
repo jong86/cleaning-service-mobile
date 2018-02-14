@@ -21,7 +21,9 @@
   "dependencies": {
     "axios": "^0.17.1",
     "expo": "^25.0.0",
+    "moment": "^2.20.1",
     "react": "16.2.0",
-    "react-native": "0.52.0"
+    "react-native": "0.52.0",
+    "uuidv4": "^1.0.0"
   }
 }

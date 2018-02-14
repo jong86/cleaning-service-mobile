@@ -1,5 +1,6 @@
-import React from 'react';
-import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
 export default class Footer extends React.Component {
   constructor() {
@@ -18,10 +19,8 @@ export default class Footer extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.logout}>
-          <View>
-            <Text>
-              Log out
-            </Text>
+          <View style={styles.button}>
+            <Ionicons name="ios-log-out" size={32} color="black" />
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -41,4 +40,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+    backgroundColor: 'gainsboro',
+    height: '100%',
+    padding: 8,
+  }
 });

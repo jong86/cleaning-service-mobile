@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import axios from 'axios'
+import uuid from 'uuidv4'
+import moment from 'moment'
 
 export default class JobsIndex extends React.Component {
   constructor() {
@@ -11,6 +13,7 @@ export default class JobsIndex extends React.Component {
     }
 
     this.fetchJobsList = this.fetchJobsList.bind(this)
+    this.renderJobsList = this.renderJobsList.bind(this)
   }
 
   componentWillMount() {
@@ -33,15 +36,52 @@ export default class JobsIndex extends React.Component {
     }
   }
 
+  renderJobsList() {
+    return (
+      <View style={styles.jobsList}>
+        { this.state.jobsList.map(job => {
+          return (
+            <View key={uuid()} style={styles.job}>
+              <View style={styles.jobRow}>
+                <Text style={styles.label}>
+                  ID
+                </Text>
+                <Text style={styles.content}>
+                  { job.id }
+                </Text>
+              </View>
+
+              <View style={styles.jobRow}>
+                <Text style={styles.label}>
+                  Time
+                </Text>
+                <Text style={styles.content}>
+                  { moment(job.confirmed_time).format("MM-DD-YYYY") }
+                </Text>
+              </View>
+
+              <View style={styles.jobRow}>
+                <Text style={styles.label}>
+                  Where
+                </Text>
+                <Text style={styles.content}>
+                  { job.address }
+                </Text>
+              </View>
+            </View>
+          )
+        })}
+      </View>
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
-          This is jobs index
+          Your scheduled jobs
         </Text>
-        <Text>
-          { JSON.stringify(this.state.jobsList) }
-        </Text>
+        { this.renderJobsList() }
       </View>
     );
   }
@@ -53,9 +93,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    borderWidth: 1,
   },
   heading: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 20
+  },
+  jobsList: {
+    width: '90%',
+  },
+  job: {
     borderWidth: 1,
+    borderColor: 'silver',
+    marginBottom: 20,
+  },
+  jobRow: {
+    flexDirection: 'row',
+    backgroundColor: 'gainsboro',
+    padding: 4,
+  },
+  label: {
+    fontWeight: 'bold',
+    width: 48,
+    textAlign: 'right',
+  },
+  content: {
+    marginLeft: 8,
   }
 });

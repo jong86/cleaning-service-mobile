@@ -11,7 +11,7 @@ export default class App extends React.Component {
     this.state = {
       isLoggedIn: false,
       authToken: null,
-      currentView: 'JobsIndex'
+      currentView: 'JobsIndex',
     }
 
     this.setAuthToken = this.setAuthToken.bind(this)
@@ -113,15 +113,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderWidth: 1,
-    borderColor: 'pink',
   },
   scrollView: {
     height: '100%',
-    borderWidth: 1,
-    borderColor: 'lime',
   },
   statusBarSpacer: {
     // Make it the same height as the status bar
     height: (Platform.OS === 'ios') ? 20 : StatusBar.currentHeight,
+    borderWidth: 0,
   }
 });
