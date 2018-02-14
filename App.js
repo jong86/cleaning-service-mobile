@@ -118,6 +118,11 @@ function mapStateToProps(state) {
 App = connect(mapStateToProps)(App)
 
 
+
+
+/*=================================================
+  Root component for wrapping App inside Provider
+=================================================*/
 class Root extends React.Component {
   render() {
     return (

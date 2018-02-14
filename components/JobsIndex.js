@@ -8,6 +8,7 @@ import moment from 'moment'
 import action from '../redux/action.js'
 import { connect } from 'react-redux'
 
+import ReactNativeComponentTree from 'react-native/Libraries/Renderer/shims/ReactNativeComponentTree';
 
 
 class JobsIndex extends React.Component {
@@ -19,6 +20,8 @@ class JobsIndex extends React.Component {
 
     this.fetchJobsList = this.fetchJobsList.bind(this)
     this.renderJobsList = this.renderJobsList.bind(this)
+
+    this.handlePressJob = this.handlePressJob.bind(this)
   }
 
   componentWillMount() {
@@ -41,39 +44,55 @@ class JobsIndex extends React.Component {
     }
   }
 
+
+  handlePressJob(e, uid) {
+    e.persist()
+    console.log(this.refs[uid].props['data-id'])
+  }
+
+
   renderJobsList() {
     return (
       <View style={styles.jobsList}>
         { this.state.jobsList.map(job => {
+          const uid = uuid()
+
           return (
-            <View key={uuid()} style={styles.job}>
-              <View style={styles.jobRow}>
-                <Text style={styles.label}>
-                  ID
-                </Text>
-                <Text style={styles.content}>
-                  { job.id }
-                </Text>
-              </View>
+            <TouchableWithoutFeedback
+              key={uid}
+              ref={uid}
+              onPress={(e) => this.handlePressJob(e, uid)}
+              data-id={job.id}
+            >
+              <View style={styles.job}>
+                <View style={styles.jobRow}>
+                  <Text style={styles.label}>
+                    ID
+                  </Text>
+                  <Text style={styles.content}>
+                    { job.id }
+                  </Text>
+                </View>
 
-              <View style={styles.jobRow}>
-                <Text style={styles.label}>
-                  Time
-                </Text>
-                <Text style={styles.content}>
-                  { moment(job.confirmed_time).format("MM-DD-YYYY") }
-                </Text>
-              </View>
+                <View style={styles.jobRow}>
+                  <Text style={styles.label}>
+                    Time
+                  </Text>
+                  <Text style={styles.content}>
+                    { moment(job.confirmed_time).format("MM-DD-YYYY") }
+                  </Text>
+                </View>
 
-              <View style={styles.jobRow}>
-                <Text style={styles.label}>
-                  Where
-                </Text>
-                <Text style={styles.content}>
-                  { job.address }
-                </Text>
+                <View style={styles.jobRow}>
+                  <Text style={styles.label}>
+                    Where
+                  </Text>
+                  <Text style={styles.content}>
+                    { job.address }
+                  </Text>
+                </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           )
         })}
       </View>
@@ -100,9 +119,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setJobIdSelected: (jobIdSelected) => {
-      dispatch(action('SET_JOB_ID_SELECTED', { jobIdSelected }))
+    setJobIdSelected: (newJobIdSelected) => {
+      dispatch(action('SET_JOB_ID_SELECTED', { newJobIdSelected }))
     },
+    setCurrentView: (newView) => {
+      dispatch(action('SET_CURRENT_VIEW', { newView }))
+    }
   }
 }
 

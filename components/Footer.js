@@ -2,7 +2,11 @@ import React from 'react'
 import { TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-export default class Footer extends React.Component {
+import action from '../redux/action.js'
+import { connect } from 'react-redux'
+
+
+class Footer extends React.Component {
   constructor() {
     super()
 
@@ -27,6 +31,26 @@ export default class Footer extends React.Component {
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    currentView: state.currentView,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setCurrentView: (newView) => {
+      dispatch(action('SET_CURRENT_VIEW', { newView }))
+    }
+  }
+}
+
+Footer = connect(mapStateToProps, mapDispatchToProps)(Footer)
+
+export default Footer
+
 
 const styles = StyleSheet.create({
   container: {
