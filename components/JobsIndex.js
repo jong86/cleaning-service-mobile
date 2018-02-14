@@ -81,7 +81,7 @@ class JobsIndex extends React.Component {
                     Time
                   </Text>
                   <Text style={styles.content}>
-                    { moment(job.confirmed_time).format("MM-DD-YYYY") }
+                    { moment(job.confirmed_time).format('MMMM Do YYYY, h:mm:ss a') }
                   </Text>
                 </View>
 
