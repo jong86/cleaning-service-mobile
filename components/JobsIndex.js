@@ -26,35 +26,33 @@ class JobsIndex extends React.Component {
   }
 
   async fetchJobsList() {
+    const { authToken, setJobsList } = this.props
+    const { sortByStartDate } = this
+
     try {
       const config = {
-        headers: { Authorization: this.props.authToken }
+        headers: { Authorization: authToken }
       }
 
       const request = axios.get('http://192.168.1.69:3000/employee/jobs', config)
       const response = await request
 
-      this.props.setJobsList(response.data.jobs)
-
+      setJobsList(response.data.jobs)
 
     } catch (error) {
       // console.warn(error)
-      console.log("hi", response.data.jobs)
-
     }
   }
 
 
   handlePressJob(jobId) {
-    const { setJobIdSelected, setCurrentView, jobIdSelected } = this.props
-    console.log(jobId)
+    const { setJobIdSelected, setCurrentView } = this.props
 
     // Set jobIdSelected to this one
     setJobIdSelected(jobId)
 
     // Set currentView to JobShow
     setCurrentView('JobShow')
-
   }
 
 

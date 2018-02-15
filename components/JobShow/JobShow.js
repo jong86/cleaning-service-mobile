@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import JobInfoRow from './JobInfoRow'
+import Button from './Button'
 
 import axios from 'axios'
 
@@ -27,8 +28,8 @@ class JobShow extends React.Component {
         <Text>
           This is job show for job { jobIdSelected }
         </Text>
-        <View style={styles.jobInfo}>
 
+        <View style={styles.jobInfo}>
           <JobInfoRow
             label='Address'
             content={job.address}
@@ -73,17 +74,23 @@ class JobShow extends React.Component {
             label='Your notes'
             content={job.employee_notes}
           />
-
         </View>
+
+        <Button
+          text="Start Job"
+        />
+
       </View>
     );
   }
 }
 
+
 function mapStateToProps(state) {
   return {
     jobIdSelected: state.jobIdSelected,
     jobsList: state.jobsList,
+    authToken: state.authToken,
   }
 }
 

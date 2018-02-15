@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import Footer from './components/Footer.js'
 import Login from './components/Login.js'
 import JobsIndex from './components/JobsIndex.js'
-import JobShow from './components/JobShow.js'
+import JobShow from './components/JobShow/JobShow.js'
 import Loading from './components/Loading.js'
 
 
@@ -77,9 +77,9 @@ class App extends React.Component {
   showCurrentView() {
     const { authToken, currentView } = this.props
     switch (currentView) {
-      case 'JobsIndex': return <JobsIndex authToken={authToken}/>
-      case 'JobShow': return <JobShow authToken={authToken}/>
-      case 'Profile': return null
+      case 'JobsIndex': return <JobsIndex/>
+      case 'JobShow': return <JobShow/>
+      case 'Profile': return <Profile/>
     }
   }
 
@@ -93,7 +93,8 @@ class App extends React.Component {
 
         { isLoading ?
           <isLoading/>
-          : authToken ?
+          :
+          authToken ?
             <ScrollView style={styles.scrollView}>
               { showCurrentView() }
             </ScrollView>
