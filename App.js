@@ -30,6 +30,11 @@ class App extends React.Component {
     this.getAuthTokenFromStorage()
   }
 
+  componentWillReceiveProps(nextProps) {
+    // Make isLoading false after loggin in
+    if (!this.props.authToken && nextProps.authToken) this.props.setIsLoading(false)
+  }
+
 
 
   /*=================
@@ -91,18 +96,19 @@ class App extends React.Component {
       <View style={styles.outerContainer}>
         <View style={styles.statusBarSpacer}/>
 
-        { isLoading ?
-          <isLoading/>
-          :
-          authToken ?
-            <ScrollView style={styles.scrollView}>
-              { showCurrentView() }
-            </ScrollView>
-            :
-            <Login setAuthToken={setAuthToken}/>
+        { isLoading &&
+          <Loading/>
         }
 
-        { authToken &&
+        { authToken ?
+          <ScrollView style={styles.scrollView}>
+            { showCurrentView() }
+          </ScrollView>
+          :
+          <Login setAuthToken={setAuthToken}/>
+        }
+
+        { authToken && !isLoading &&
           <Footer
             clearAuthToken={clearAuthToken}
           />

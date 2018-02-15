@@ -21,6 +21,10 @@ class JobShow extends React.Component {
     this.patchJob = this.patchJob.bind(this)
   }
 
+  componentDidMount() {
+    this.props.setIsLoading(false)
+  }
+
 
   formatDate(date) {
     if (!date) return '-'
@@ -165,6 +169,9 @@ function mapDispatchToProps(dispatch) {
   return {
     updateJobState: (jobId, jobState) => {
       dispatch(action('UPDATE_JOB_STATE', { jobId, jobState }))
+    },
+    setIsLoading: (isLoading) => {
+      dispatch(action('SET_IS_LOADING', { isLoading }))
     },
   }
 }

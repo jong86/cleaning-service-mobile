@@ -26,8 +26,10 @@ class JobsIndex extends React.Component {
   }
 
   async fetchJobsList() {
-    const { authToken, setJobsList } = this.props
+    const { authToken, setJobsList, setIsLoading } = this.props
     const { sortByStartDate } = this
+
+    setIsLoading(true)
 
     try {
       const config = { headers: { Authorization: authToken } }
@@ -39,11 +41,15 @@ class JobsIndex extends React.Component {
     } catch (error) {
       // console.warn(error)
     }
+
+    setIsLoading(false)
   }
 
 
   handlePressJob(jobId) {
-    const { setJobIdSelected, setCurrentView } = this.props
+    const { setJobIdSelected, setCurrentView, setIsLoading } = this.props
+
+    setIsLoading(true)
 
     // Set jobIdSelected to this one
     setJobIdSelected(jobId)
@@ -102,6 +108,9 @@ function mapDispatchToProps(dispatch) {
     },
     setAuthToken: (authToken) => {
       dispatch(action('SET_AUTH_TOKEN', { authToken }))
+    },
+    setIsLoading: (isLoading) => {
+      dispatch(action('SET_IS_LOADING', { isLoading }))
     },
   }
 }

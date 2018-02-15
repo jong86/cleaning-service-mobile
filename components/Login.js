@@ -2,9 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
+import { action } from '../redux/action.js'
+import { connect } from 'react-redux'
+
 import axios from 'axios'
 
-export default class Login extends React.Component {
+
+
+class Login extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -16,6 +21,8 @@ export default class Login extends React.Component {
   }
 
   async onSubmit() {
+    this.props.setIsLoading(true)
+
     try {
       const request = axios.post('http://192.168.1.69:3000/authenticate', {
         email: this.state.email,
@@ -71,13 +78,27 @@ export default class Login extends React.Component {
   }
 }
 
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setIsLoading: (isLoading) => {
+      dispatch(action('SET_IS_LOADING', { isLoading }))
+    }
+  }
+}
+
+Login = connect(null, mapDispatchToProps)(Login)
+
+export default Login
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    borderWidth: 1,
     width: '100%',
     padding: 64,
   },

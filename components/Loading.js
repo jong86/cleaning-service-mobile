@@ -3,7 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const Loading = () => (
   <View style={styles.container}>
-    Loading...
+    <Text>
+      Loading
+    </Text>
   </View>
 )
 
@@ -13,10 +15,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     width: '100%',
+    height: '100%',
     padding: 64,
+
+    zIndex: 10,
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 });

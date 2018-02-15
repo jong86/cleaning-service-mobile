@@ -53,7 +53,10 @@ function mapDispatchToProps(dispatch) {
   return {
     setCurrentView: (currentView) => {
       dispatch(action('SET_CURRENT_VIEW', { currentView }))
-    }
+    },
+    setIsLoading: (isLoading) => {
+      dispatch(action('SET_IS_LOADING', { isLoading }))
+    },
   }
 }
 
