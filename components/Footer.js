@@ -51,8 +51,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCurrentView: (newView) => {
-      dispatch(action('SET_CURRENT_VIEW', { newView }))
+    setCurrentView: (currentView) => {
+      dispatch(action('SET_CURRENT_VIEW', { currentView }))
     }
   }
 }

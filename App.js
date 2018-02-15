@@ -4,22 +4,20 @@ import { Platform, StyleSheet, ScrollView, StatusBar, Text, View } from 'react-n
 
 import { Provider } from 'react-redux'
 import store from './redux/store'
+import { action } from './redux/action.js'
 import { connect } from 'react-redux'
 
 import Footer from './components/Footer.js'
 import Login from './components/Login.js'
 import JobsIndex from './components/JobsIndex.js'
 import JobShow from './components/JobShow.js'
+import Loading from './components/Loading.js'
 
 
 
 class App extends React.Component {
   constructor() {
     super()
-    this.state = {
-      isLoggedIn: false,
-      authToken: null,
-    }
 
     this.setAuthToken = this.setAuthToken.bind(this)
     this.getAuthToken = this.getAuthToken.bind(this)
@@ -42,9 +40,10 @@ class App extends React.Component {
     // Save token in storage
     try {
       await AsyncStorage.setItem('@Storage:authToken', authToken)
-      this.setState({ isLoggedIn: true })
+      this.props.setAuthToken(authToken)
+      console.log("hi")
     } catch (error) {
-      // console.warn("error setting", error)
+      console.warn("error setting", error)
     }
   }
 
@@ -52,11 +51,11 @@ class App extends React.Component {
     // Get token from storage
     try {
       const authToken = await AsyncStorage.getItem('@Storage:authToken')
-      if (authToken !== null) {
-        this.setState({ isLoggedIn: true, authToken: authToken })
+      if (this.props.authToken !== null) {
+        this.props.setAuthToken(authToken)
       }
     } catch (error) {
-      // console.warn("error getting", error)
+      console.warn("error getting", error)
     }
   }
 
@@ -64,9 +63,9 @@ class App extends React.Component {
     // Remove token from storage
     try {
       const authToken = await AsyncStorage.removeItem('@Storage:authToken')
-      this.setState({ isLoggedIn: false })
+      this.props.setAuthToken(null)
     } catch (error) {
-      // console.warn("error clearing", error)
+      console.warn("error clearing", error)
     }
   }
 
@@ -77,8 +76,7 @@ class App extends React.Component {
   ===========*/
 
   showCurrentView() {
-    const { authToken } = this.state
-    const { currentView } = this.props
+    const { authToken, currentView } = this.props
     switch (currentView) {
       case 'JobsIndex': return <JobsIndex authToken={authToken}/>
       case 'JobShow': return <JobShow authToken={authToken}/>
@@ -87,15 +85,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn } = this.state
+    const { authToken } = this.props
     const { setAuthToken, clearAuthToken, showCurrentView } = this
 
     return (
       <View style={styles.outerContainer}>
-        { !isLoggedIn &&
+        { !authToken &&
           <Login setAuthToken={setAuthToken}/>
         }
-        { isLoggedIn &&
+        { authToken &&
           <View style={styles.innerContainer}>
             <View style={styles.statusBarSpacer}/>
 
@@ -116,11 +114,23 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     currentView: state.currentView,
-    store: store,
+    authToken: state.authToken,
+    isLoading: state.isLoading,
   }
 }
 
-App = connect(mapStateToProps)(App)
+function mapDispatchToProps(dispatch) {
+  return {
+    setAuthToken: (authToken) => {
+      dispatch(action('SET_AUTH_TOKEN', { authToken }))
+    },
+    setIsLoading: (isLoading) => {
+      dispatch(action('SET_IS_LOADING', { isLoading }))
+    },
+  }
+}
+
+App = connect(mapStateToProps, mapDispatchToProps)(App)
 
 
 

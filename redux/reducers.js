@@ -4,24 +4,38 @@ const reducers = (state = initialState, action) => {
   switch (action.type) {
 
     case ('SET_JOB_ID_SELECTED'):
-      const { newJobIdSelected } = action
+      const { jobIdSelected } = action
       return {
         ...state,
-        jobIdSelected: newJobIdSelected,
+        jobIdSelected,
       }
 
     case ('SET_CURRENT_VIEW'):
-      const { newView } = action
+      const { currentView } = action
       return {
         ...state,
-        currentView: newView,
+        currentView,
       }
 
     case ('SET_JOBS_LIST'):
-      const { newJobsList } = action
+      const { jobsList } = action
       return {
         ...state,
-        jobsList: newJobsList,
+        jobsList,
+      }
+
+    case ('SET_AUTH_TOKEN'):
+      const { authToken } = action
+      return {
+        ...state,
+        authToken,
+      }
+
+    case ('SET_IS_LOADING'):
+      const { isLoading } = action
+      return {
+        ...state,
+        isLoading,
       }
 
     default:

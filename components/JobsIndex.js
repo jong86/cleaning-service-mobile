@@ -36,8 +36,11 @@ class JobsIndex extends React.Component {
 
       this.props.setJobsList(response.data.jobs)
 
+
     } catch (error) {
-      console.warn(error)
+      // console.warn(error)
+      console.log("hi", response.data.jobs)
+
     }
   }
 
@@ -53,8 +56,6 @@ class JobsIndex extends React.Component {
     setCurrentView('JobShow')
 
   }
-
-
 
 
   renderJobsList() {
@@ -117,19 +118,23 @@ function mapStateToProps(state) {
   return {
     jobIdSelected: state.jobIdSelected,
     jobsList: state.jobsList,
+    authToken: state.authToken,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setJobIdSelected: (newJobIdSelected) => {
-      dispatch(action('SET_JOB_ID_SELECTED', { newJobIdSelected: newJobIdSelected }))
+    setJobIdSelected: (jobIdSelected) => {
+      dispatch(action('SET_JOB_ID_SELECTED', { jobIdSelected }))
     },
-    setCurrentView: (newView) => {
-      dispatch(action('SET_CURRENT_VIEW', { newView: newView }))
+    setCurrentView: (currentView) => {
+      dispatch(action('SET_CURRENT_VIEW', { currentView }))
     },
-    setJobsList: (newJobsList) => {
-      dispatch(action('SET_JOBS_LIST', { newJobsList: newJobsList }))
+    setJobsList: (jobsList) => {
+      dispatch(action('SET_JOBS_LIST', { jobsList }))
+    },
+    setAuthToken: (authToken) => {
+      dispatch(action('SET_AUTH_TOKEN', { authToken }))
     },
   }
 }
