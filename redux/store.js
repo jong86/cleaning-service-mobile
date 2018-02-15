@@ -1,6 +1,7 @@
-import { createStore } from 'redux'
+import reducer from './reducer' //Import the reducer
 
-import reducers from './reducers' //Import the reducer
+import { createStore } from 'redux';
+import devToolsEnhancer from 'remote-redux-devtools';
+const store = createStore(reducer, devToolsEnhancer());
 
-// Connect our store to the reducers
-export default createStore(reducers)
+export default store

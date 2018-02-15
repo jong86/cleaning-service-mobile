@@ -8,20 +8,57 @@ import axios from 'axios'
 
 import moment from 'moment'
 
+import { action } from '../../redux/action.js'
 import { connect } from 'react-redux'
 
 
 class JobShow extends React.Component {
+  constructor() {
+    super()
+
+    this.onPressStartJob = this.onPressStartJob.bind(this)
+    this.patchJob = this.patchJob.bind(this)
+  }
+
   formatDate(date) {
+    if (!date) return '-'
     return moment(date).format('MMMM Do YYYY, h:mm:ss a')
   }
 
+  onPressStartJob() {
+    const { jobIdSelected } = this.props
+    const timeNow = new Date().toISOString()
+
+    alert(`You are starting job #${jobIdSelected} at ${timeNow}`)
+    this.patchJob('time_work_started', timeNow)
+  }
+
+  async patchJob(column, newValue) {
+    const { jobIdSelected, authToken, updateJobState } = this.props
+    try {
+      const config = { headers: { Authorization: authToken } }
+      const request = axios.patch(`http://192.168.1.69:3000/employee/jobs/${jobIdSelected}`, {
+        [column]: newValue,
+      }, config)
+
+      const response = await request
+
+      const newJobState = response.data.job
+
+      console.log("newJobState", response.data.job)
+
+      updateJobState(jobIdSelected, newJobState)
+
+    } catch (error) {
+      // console.warn(error)
+    }
+  }
 
   render() {
     const { jobIdSelected, jobsList } = this.props
-    const job = jobsList.find(job => job.id === jobIdSelected)
-
     const { formatDate } = this
+
+    const job = jobsList.find(job => job.id === jobIdSelected)
 
     return (
       <View style={styles.container}>
@@ -77,6 +114,7 @@ class JobShow extends React.Component {
         </View>
 
         <Button
+          onPress={this.onPressStartJob}
           text="Start Job"
         />
 
@@ -94,7 +132,15 @@ function mapStateToProps(state) {
   }
 }
 
-JobShow = connect(mapStateToProps)(JobShow)
+function mapDispatchToProps(dispatch) {
+  return {
+    updateJobState: (jobId, jobState) => {
+      dispatch(action('UPDATE_JOB_STATE', { jobId, jobState }))
+    },
+  }
+}
+
+JobShow = connect(mapStateToProps, mapDispatchToProps)(JobShow)
 
 export default JobShow
 

@@ -1,6 +1,7 @@
+import update from 'immutability-helper';
 import initialState from './initialState'
 
-const reducers = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case ('SET_JOB_ID_SELECTED'):
@@ -10,6 +11,8 @@ const reducers = (state = initialState, action) => {
         jobIdSelected,
       }
 
+
+
     case ('SET_CURRENT_VIEW'):
       const { currentView } = action
       return {
@@ -17,12 +20,16 @@ const reducers = (state = initialState, action) => {
         currentView,
       }
 
+
+
     case ('SET_JOBS_LIST'):
-      const { jobsList } = action
+      const { incomingJobsList } = action
       return {
         ...state,
-        jobsList,
+        jobsList: incomingJobsList,
       }
+
+
 
     case ('SET_AUTH_TOKEN'):
       const { authToken } = action
@@ -31,6 +38,8 @@ const reducers = (state = initialState, action) => {
         authToken,
       }
 
+
+
     case ('SET_IS_LOADING'):
       const { isLoading } = action
       return {
@@ -38,9 +47,33 @@ const reducers = (state = initialState, action) => {
         isLoading,
       }
 
+
+
+    case ('UPDATE_JOB_STATE'):
+      const { jobId, jobState } = action
+      const { jobsList } = state
+
+      // Find index of job with this id so we can update it
+      let jobIndex
+      for (let i = 0; i < jobsList.length; i++) {
+        console.log(i, jobsList[i].id, jobId)
+        if (jobsList[i].id === jobId) {
+          jobIndex = i
+          break
+        }
+      }
+
+      return update(state, {
+        jobsList: {
+          [jobIndex]: { $set: jobState }
+        }
+      })
+
+
+
     default:
       return { ...state }
   }
 }
 
-export default reducers
+export default reducer

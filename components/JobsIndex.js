@@ -30,10 +30,7 @@ class JobsIndex extends React.Component {
     const { sortByStartDate } = this
 
     try {
-      const config = {
-        headers: { Authorization: authToken }
-      }
-
+      const config = { headers: { Authorization: authToken } }
       const request = axios.get('http://192.168.1.69:3000/employee/jobs', config)
       const response = await request
 
@@ -128,8 +125,8 @@ function mapDispatchToProps(dispatch) {
     setCurrentView: (currentView) => {
       dispatch(action('SET_CURRENT_VIEW', { currentView }))
     },
-    setJobsList: (jobsList) => {
-      dispatch(action('SET_JOBS_LIST', { jobsList }))
+    setJobsList: (incomingJobsList) => {
+      dispatch(action('SET_JOBS_LIST', { incomingJobsList }))
     },
     setAuthToken: (authToken) => {
       dispatch(action('SET_AUTH_TOKEN', { authToken }))
