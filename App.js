@@ -20,14 +20,14 @@ class App extends React.Component {
     super()
 
     this.setAuthToken = this.setAuthToken.bind(this)
-    this.getAuthToken = this.getAuthToken.bind(this)
+    this.getAuthTokenFromStorage = this.getAuthTokenFromStorage.bind(this)
     this.clearAuthToken = this.clearAuthToken.bind(this)
 
     this.showCurrentView = this.showCurrentView.bind(this)
   }
 
   componentWillMount() {
-    this.getAuthToken()
+    this.getAuthTokenFromStorage()
   }
 
 
@@ -41,17 +41,16 @@ class App extends React.Component {
     try {
       await AsyncStorage.setItem('@Storage:authToken', authToken)
       this.props.setAuthToken(authToken)
-      console.log("hi")
     } catch (error) {
       console.warn("error setting", error)
     }
   }
 
-  async getAuthToken() {
+  async getAuthTokenFromStorage() {
     // Get token from storage
     try {
       const authToken = await AsyncStorage.getItem('@Storage:authToken')
-      if (this.props.authToken !== null) {
+      if (authToken !== null) {
         this.props.setAuthToken(authToken)
       }
     } catch (error) {
@@ -85,26 +84,27 @@ class App extends React.Component {
   }
 
   render() {
-    const { authToken } = this.props
+    const { authToken, isLoading } = this.props
     const { setAuthToken, clearAuthToken, showCurrentView } = this
 
     return (
       <View style={styles.outerContainer}>
-        { !authToken &&
-          <Login setAuthToken={setAuthToken}/>
-        }
-        { authToken &&
-          <View style={styles.innerContainer}>
-            <View style={styles.statusBarSpacer}/>
+        <View style={styles.statusBarSpacer}/>
 
+        { isLoading ?
+          <isLoading/>
+          : authToken ?
             <ScrollView style={styles.scrollView}>
               { showCurrentView() }
             </ScrollView>
+            :
+            <Login setAuthToken={setAuthToken}/>
+        }
 
-            <Footer
-              clearAuthToken={clearAuthToken}
-            />
-          </View>
+        { authToken &&
+          <Footer
+            clearAuthToken={clearAuthToken}
+          />
         }
       </View>
     );
@@ -164,14 +164,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  innerContainer: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    borderWidth: 1,
-  },
   scrollView: {
     height: '100%',
+    width: '100%',
     marginBottom: 50,
   },
   statusBarSpacer: {

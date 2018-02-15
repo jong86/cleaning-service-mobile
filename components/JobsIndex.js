@@ -158,11 +158,9 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   jobsList: {
-    width: '90%',
+    width: '100%',
   },
   job: {
-    borderWidth: 1,
-    borderColor: 'silver',
     marginBottom: 20,
   },
   jobRow: {
