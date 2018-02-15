@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
-const Button = ({ onPress, text }) => (
+const Button = ({ onPress, text, color }) => (
   <TouchableWithoutFeedback onPress={onPress}>
-    <View style={styles.button}>
+    <View style={[styles.button, { backgroundColor: color }]}>
       <Text style={styles.text}>
         { text }
       </Text>
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '75%',
     height: 64,
-    backgroundColor: 'green',
     padding: 16,
+    margin: 16,
   },
   text: {
     color: 'white',

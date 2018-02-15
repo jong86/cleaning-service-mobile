@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 import Footer from './components/Footer.js'
 import Login from './components/Login.js'
-import JobsIndex from './components/JobsIndex.js'
+import JobsIndex from './components/JobsIndex/JobsIndex.js'
 import JobShow from './components/JobShow/JobShow.js'
 import Loading from './components/Loading.js'
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
+import Job from './Job'
+
 import axios from 'axios'
 import uuid from 'uuidv4'
 import moment from 'moment'
 
-import { action } from '../redux/action.js'
+import { action } from '../../redux/action.js'
 import { connect } from 'react-redux'
-
-import ReactNativeComponentTree from 'react-native/Libraries/Renderer/shims/ReactNativeComponentTree';
 
 
 class JobsIndex extends React.Component {
@@ -58,39 +58,11 @@ class JobsIndex extends React.Component {
       <View style={styles.jobsList}>
         { this.props.jobsList.map(job => {
           return (
-            <TouchableWithoutFeedback
+            <Job
+              job={job}
               key={uuid()}
-              onPress={() => this.handlePressJob(job.id)}
-            >
-              <View style={styles.job}>
-                <View style={styles.jobRow}>
-                  <Text style={styles.label}>
-                    ID
-                  </Text>
-                  <Text style={styles.content}>
-                    { job.id }
-                  </Text>
-                </View>
-
-                <View style={styles.jobRow}>
-                  <Text style={styles.label}>
-                    Time
-                  </Text>
-                  <Text style={styles.content}>
-                    { moment(job.confirmed_time).format('MMMM Do YYYY, h:mm:ss a') }
-                  </Text>
-                </View>
-
-                <View style={styles.jobRow}>
-                  <Text style={styles.label}>
-                    Where
-                  </Text>
-                  <Text style={styles.content}>
-                    { job.address }
-                  </Text>
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
+              handlePressJob={this.handlePressJob}
+            />
           )
         })}
       </View>
@@ -155,20 +127,4 @@ const styles = StyleSheet.create({
   jobsList: {
     width: '100%',
   },
-  job: {
-    marginBottom: 20,
-  },
-  jobRow: {
-    flexDirection: 'row',
-    backgroundColor: 'gainsboro',
-    padding: 4,
-  },
-  label: {
-    fontWeight: 'bold',
-    width: 48,
-    textAlign: 'right',
-  },
-  content: {
-    marginLeft: 8,
-  }
-});
+})

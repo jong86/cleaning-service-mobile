@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
-import JobInfoRow from './JobInfoRow'
+import Row from './Row'
 import Button from './Button'
 
 import axios from 'axios'
@@ -17,21 +17,34 @@ class JobShow extends React.Component {
     super()
 
     this.onPressStartJob = this.onPressStartJob.bind(this)
+    this.onPressCompleteJob = this.onPressCompleteJob.bind(this)
     this.patchJob = this.patchJob.bind(this)
   }
+
 
   formatDate(date) {
     if (!date) return '-'
     return moment(date).format('MMMM Do YYYY, h:mm:ss a')
   }
 
+
   onPressStartJob() {
     const { jobIdSelected } = this.props
     const timeNow = new Date().toISOString()
 
-    alert(`You are starting job #${jobIdSelected} at ${timeNow}`)
+    alert(`You are starting job #${jobIdSelected} at ${this.formatDate(timeNow)}`)
     this.patchJob('time_work_started', timeNow)
   }
+
+
+  onPressCompleteJob() {
+    const { jobIdSelected } = this.props
+    const timeNow = new Date().toISOString()
+
+    alert(`You finished job #${jobIdSelected} at ${this.formatDate(timeNow)}`)
+    this.patchJob('time_work_completed', timeNow)
+  }
+
 
   async patchJob(column, newValue) {
     const { jobIdSelected, authToken, updateJobState } = this.props
@@ -45,14 +58,13 @@ class JobShow extends React.Component {
 
       const newJobState = response.data.job
 
-      console.log("newJobState", response.data.job)
-
       updateJobState(jobIdSelected, newJobState)
 
     } catch (error) {
       // console.warn(error)
     }
   }
+
 
   render() {
     const { jobIdSelected, jobsList } = this.props
@@ -62,61 +74,78 @@ class JobShow extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>
-          This is job show for job { jobIdSelected }
+        <Text style={styles.heading}>
+          Job #{ jobIdSelected }
         </Text>
 
         <View style={styles.jobInfo}>
-          <JobInfoRow
+          <Row
             label='Address'
             content={job.address}
           />
 
-          <JobInfoRow
+          <Row
             label='Description'
             content={job.description}
           />
 
-          <JobInfoRow
+          <Row
             label='Customer phone number'
             content={job.phone}
           />
 
-          <JobInfoRow
+          <Row
             label='Customer email'
             content={job.email}
           />
 
-          <JobInfoRow
+          <Row
             label='Scheduled start time'
             content={formatDate(job.confirmed_time)}
           />
 
-          <JobInfoRow
+          <Row
             label='Time you started work'
             content={formatDate(job.time_work_started)}
           />
 
-          <JobInfoRow
+          <Row
             label='Time you completed work'
             content={formatDate(job.time_work_completed)}
           />
 
-          <JobInfoRow
+          <Row
             label='Notes from office'
             content={job.admin_notes}
           />
 
-          <JobInfoRow
+          <Row
             label='Your notes'
             content={job.employee_notes}
           />
         </View>
 
-        <Button
-          onPress={this.onPressStartJob}
-          text="Start Job"
-        />
+        { !job.time_work_started &&
+          <Button
+            onPress={this.onPressStartJob}
+            text="Start Job"
+            color="green"
+          />
+        }
+
+        { !job.time_work_completed && job.time_work_started &&
+          <Button
+            onPress={this.onPressCompleteJob}
+            text="Finish Job"
+            color="red"
+          />
+        }
+
+        { job.time_work_started && job.time_work_completed &&
+          <Text style={styles.statusText}>
+            This job is finished.
+          </Text>
+        }
 
       </View>
     );
@@ -151,9 +180,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
+  heading: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 20
+  },
   jobInfo: {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+  },
+  statusText: {
+    margin: 16,
   },
 });
