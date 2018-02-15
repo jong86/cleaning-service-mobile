@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'
 
 import moment from 'moment'
 
@@ -18,11 +19,11 @@ class Job extends React.Component {
     } = this.props.job
 
     if (!timeWorkStarted && !timeWorkCompleted) {
-      return 'New'
+      return <Ionicons name="ios-alert" size={32} color="red" />
     } else if (timeWorkStarted && !timeWorkCompleted) {
-      return 'Pending'
+      return <Ionicons name="ios-time" size={32} color="orange" />
     } else if (timeWorkStarted && timeWorkCompleted) {
-      return 'Finished'
+      return <Ionicons name="ios-checkmark-circle" size={32} color="green" />
     } else {
       return 'No start time'
     }

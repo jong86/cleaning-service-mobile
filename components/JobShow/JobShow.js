@@ -129,7 +129,7 @@ class JobShow extends React.Component {
           <Button
             onPress={this.onPressStartJob}
             text="Start Job"
-            color="green"
+            color="orange"
           />
         }
 
@@ -137,7 +137,7 @@ class JobShow extends React.Component {
           <Button
             onPress={this.onPressCompleteJob}
             text="Finish Job"
-            color="red"
+            color="green"
           />
         }
 
@@ -182,8 +182,9 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 20
+    fontSize: 24,
+    marginTop: 24,
+    marginBottom: 24,
   },
   jobInfo: {
     alignItems: 'center',

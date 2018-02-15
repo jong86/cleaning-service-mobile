@@ -121,8 +121,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 20
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginTop: 24,
+    marginBottom: 24,
   },
   jobsList: {
     width: '100%',
