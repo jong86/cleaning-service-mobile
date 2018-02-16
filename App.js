@@ -13,11 +13,8 @@ import JobsIndex from './components/JobsIndex/JobsIndex.js'
 import JobShow from './components/JobShow/JobShow.js'
 import Loading from './components/Loading.js'
 
-
 import ActionCable from 'react-native-actioncable'
-const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
-
-
+const cable = ActionCable.createConsumer('ws://192.168.1.69:3000/cable')
 
 class App extends React.Component {
   constructor() {
@@ -31,11 +28,17 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.getAuthTokenFromStorage()
+    // this.getAuthTokenFromStorage()
+  }
 
-    cable.subscriptions.create('EmployeeChannel', {
+  componentDidMount() {
+    const parent = this
+    this.subscription = cable.subscriptions.create('EmployeesChannel', {
       received(data) {
-        console.log('Received data:', data)
+        console.log(data.job.employee_id, 'vs', parent.props)
+        if (true) {
+          parent.props.pushToJobsList(data)
+        }
       }
     })
   }
@@ -133,6 +136,7 @@ function mapStateToProps(state) {
     currentView: state.currentView,
     authToken: state.authToken,
     isLoading: state.isLoading,
+    userData: state.userData,
   }
 }
 
@@ -143,6 +147,9 @@ function mapDispatchToProps(dispatch) {
     },
     setIsLoading: (isLoading) => {
       dispatch(action('SET_IS_LOADING', { isLoading }))
+    },
+    pushToJobsList: (newJob) => {
+      dispatch(action('PUSH_TO_JOBS_LIST', { newJob }))
     },
   }
 }

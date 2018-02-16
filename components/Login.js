@@ -29,8 +29,10 @@ class Login extends React.Component {
         password: this.state.password,
       })
       const response = await request
-      const authToken = response.data.auth_token
 
+      const { auth_token: authToken, user_data: userData } = response.data
+      console.log("user data from login", userData)
+      this.props.setUserData(userData)
       this.props.setAuthToken(authToken)
 
     } catch (error) {
@@ -83,7 +85,10 @@ function mapDispatchToProps(dispatch) {
   return {
     setIsLoading: (isLoading) => {
       dispatch(action('SET_IS_LOADING', { isLoading }))
-    }
+    },
+    setUserData: (userData) => {
+      dispatch(action('SET_USER_DATA', { userData }))
+    },
   }
 }
 

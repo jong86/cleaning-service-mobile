@@ -30,6 +30,12 @@ const reducer = (state = initialState, action) => {
       }
 
 
+    case ('PUSH_TO_JOBS_LIST'):
+      const { newJob } = action
+      return update(state, {
+        jobsList: { $push: [newJob] }
+      })
+
 
     case ('SET_AUTH_TOKEN'):
       const { authToken } = action
@@ -69,6 +75,15 @@ const reducer = (state = initialState, action) => {
         }
       })
 
+
+
+    case ('SET_USER_DATA'):
+      const { userData } = action
+      console.log("action data from reducer", action)
+      return {
+        ...state,
+        userData: userData,
+      }
 
 
     default:
