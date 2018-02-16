@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 const JobInfoRow = ({ label, content }) => (
-  <View style={styles.row}>
+  <View style={[styles.row, { marginBottom: label !==  'Your notes' ? 16 : 0 }]}>
     <View style={styles.label}>
       <Text style={styles.labelText}>
         { label }
@@ -21,23 +21,21 @@ export default JobInfoRow
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'column',
-    width: '100%',
-    marginTop: 10,
-    marginBottom: 10,
     backgroundColor: 'gainsboro',
-    padding: 4,
+    padding: 8,
+    width: '100%',
   },
   label: {
     borderBottomWidth: 1,
     borderColor: 'silver',
-    width: '100%',
+    alignSelf: 'stretch',
     padding: 4,
   },
   labelText: {
     fontWeight: 'bold',
   },
   content: {
-    width: '100%',
+    alignSelf: 'stretch',
     padding: 4,
   }
 });

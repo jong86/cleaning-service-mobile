@@ -124,7 +124,7 @@ class App extends React.Component {
     const { setAuthToken, clearAuthToken, showCurrentView } = this
 
     return (
-      <View style={styles.outerContainer}>
+      <View style={styles.container}>
         <View style={styles.statusBarSpacer}/>
 
         { isLoading &&
@@ -132,7 +132,7 @@ class App extends React.Component {
         }
 
         { authToken ?
-          <ScrollView style={styles.scrollView}>
+          <ScrollView contentContainerStyle={styles.scrollView}>
             { showCurrentView() }
           </ScrollView>
           :
@@ -200,16 +200,15 @@ export default Root
 ========*/
 
 const styles = StyleSheet.create({
-  outerContainer: {
+  container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   scrollView: {
-    height: '100%',
-    width: '100%',
-    marginBottom: 48,
+    paddingBottom: 96,
+    alignItems: 'center',
+    minWidth: '100%',
   },
   statusBarSpacer: {
     // Make it the same height as the status bar

@@ -76,12 +76,12 @@ class JobShow extends React.Component {
 
     const job = jobsList.find(job => job.id === jobIdSelected)
 
-    const buttonColor = '#607D8B'
+    const buttonColor = '#545454'
 
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
-          Job #{ jobIdSelected }
+          Job { jobIdSelected }
         </Text>
 
         <View style={styles.jobInfo}>
@@ -198,7 +198,11 @@ const styles = StyleSheet.create({
   jobInfo: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '96%',
+    alignSelf: 'center',
+    backgroundColor: '#BDBDBD',
+    padding: 8,
+    borderRadius: 8,
   },
   statusText: {
     margin: 16,
