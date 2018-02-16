@@ -35,10 +35,10 @@ class App extends React.Component {
     const parent = this
     this.subscription = cable.subscriptions.create('EmployeesChannel', {
       received(data) {
-        console.warn("new job received")
         // If employee id of the job matches this current user's id
         if (Number(data.job.employee_id) === Number(parent.props.userData.id)) {
           parent.props.pushToJobsList(data.job)
+          parent.playNotificationSound()
         }
       }
     })
@@ -47,6 +47,12 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     // Make isLoading false after loggin in
     if (!this.props.authToken && nextProps.authToken) this.props.setIsLoading(false)
+  }
+
+  async playNotificationSound() {
+    const soundObject = new Expo.Audio.Sound();
+    await soundObject.loadAsync(require('./notification.wav'), {}, true);
+    await soundObject.playAsync()
   }
 
 
