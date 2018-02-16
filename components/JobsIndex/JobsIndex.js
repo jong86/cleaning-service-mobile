@@ -11,6 +11,8 @@ import { action } from '../../redux/action.js'
 import { connect } from 'react-redux'
 
 
+
+
 class JobsIndex extends React.Component {
   constructor() {
     super()

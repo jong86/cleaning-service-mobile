@@ -14,6 +14,10 @@ import JobShow from './components/JobShow/JobShow.js'
 import Loading from './components/Loading.js'
 
 
+import ActionCable from 'react-native-actioncable'
+const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+
+
 
 class App extends React.Component {
   constructor() {
@@ -28,6 +32,12 @@ class App extends React.Component {
 
   componentWillMount() {
     this.getAuthTokenFromStorage()
+
+    cable.subscriptions.create('EmployeeChannel', {
+      received(data) {
+        console.log('Received data:', data)
+      }
+    })
   }
 
   componentWillReceiveProps(nextProps) {
