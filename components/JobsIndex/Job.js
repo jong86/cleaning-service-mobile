@@ -82,16 +82,20 @@ export default Job
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '96%',
     height: 100,
     flexDirection: 'row',
     backgroundColor: 'gainsboro',
     marginTop: 16,
     marginBottom: 16,
+    alignSelf: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'silver',
   },
   jobInfo: {
-    marginBottom: 20,
-    width: '80%',
+    marginBottom: 24,
+    width: '84%',
     height: '100%',
     justifyContent: 'center',
   },
@@ -108,8 +112,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   jobStatus: {
-    width: '20%',
+    width: '16%',
     justifyContent: 'center',
     alignItems: 'center',
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    backgroundColor: 'white',
   },
 });

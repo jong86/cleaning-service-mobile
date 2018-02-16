@@ -21,13 +21,16 @@ export default JobInfoRow
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'column',
-    backgroundColor: 'gainsboro',
+    backgroundColor: 'white',
     padding: 8,
     width: '100%',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'silver',
   },
   label: {
     borderBottomWidth: 1,
-    borderColor: 'silver',
+    borderColor: 'gainsboro',
     alignSelf: 'stretch',
     padding: 4,
   },

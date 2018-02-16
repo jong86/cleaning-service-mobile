@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     borderColor: 'silver',
     backgroundColor: 'white',
     borderWidth: 1,
+    borderRadius: 8,
     padding: 8,
     marginBottom: 20,
   },
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
     padding: 8,
     alignItems: 'center',
     alignSelf: 'stretch',
+    borderRadius: 8,
   },
 
 });

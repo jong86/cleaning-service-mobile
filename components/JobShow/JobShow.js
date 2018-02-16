@@ -200,11 +200,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '96%',
     alignSelf: 'center',
-    backgroundColor: '#BDBDBD',
+    backgroundColor: 'gainsboro',
     padding: 8,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'silver'
   },
   statusText: {
     margin: 16,
+  },
+  button: {
+    borderRadius: 8,
   },
 });
