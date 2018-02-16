@@ -43,37 +43,48 @@ class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>
-          Log in
-        </Text>
 
-        <Text style={styles.label}>
-          E-mail
-        </Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-        />
+        <View style={styles.top}>
+          <Text style={styles.brandName}>VanCleaning</Text>
+          <Text style={styles.subtitle}>Employee App</Text>
+        </View>
 
-        <Text style={styles.label}>
-          Password
-        </Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-        />
-
-        <TouchableWithoutFeedback
-          onPress={this.onSubmit}
-        >
-          <View style={styles.button}>
-            <Text>
-              SUBMIT
+        <View style={styles.bottom}>
+          <View style={styles.box}>
+            <Text style={styles.heading}>
+              Log in
             </Text>
+
+            <Text style={styles.label}>
+              E-mail
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={(email) => this.setState({email})}
+              value={this.state.email}
+            />
+
+            <Text style={styles.label}>
+              Password
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={(password) => this.setState({password})}
+              value={this.state.password}
+              secureTextEntry={true}
+            />
+
+            <TouchableWithoutFeedback
+              onPress={this.onSubmit}
+            >
+              <View style={styles.button}>
+                <Text>
+                  OK
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
 
       </View>
     );
@@ -105,29 +116,56 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     width: '100%',
-    padding: 64,
+  },
+  brandName: {
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 16,
+  },
+  top: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '25%',
+  },
+  bottom: {
+    width: '100%',
+    height: '75%',
+  },
+  box: {
+    borderWidth: 1,
+    borderColor: 'silver',
+    alignSelf: 'center',
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: 'gainsboro',
   },
   heading: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 50,
+    marginBottom: 48,
   },
   label: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 8,
   },
   textInput: {
-    height: 40,
-    width: 200,
-    borderColor: 'gray',
+    height: 48,
+    width: 256,
+    borderColor: 'silver',
+    backgroundColor: 'white',
     borderWidth: 1,
     padding: 8,
     marginBottom: 20,
   },
   button: {
-    backgroundColor: 'gainsboro',
+    backgroundColor: 'silver',
     padding: 8,
-    width: 128,
+    alignItems: 'center',
+    alignSelf: 'stretch',
   },
 
 });
