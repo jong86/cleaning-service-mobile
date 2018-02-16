@@ -29,8 +29,6 @@ class JobsIndex extends React.Component {
     const { authToken, setJobsList, setIsLoading } = this.props
     const { sortByStartDate } = this
 
-    setIsLoading(true)
-
     try {
       const config = { headers: { Authorization: authToken } }
       const request = axios.get('http://192.168.1.69:3000/employee/jobs', config)
@@ -39,10 +37,8 @@ class JobsIndex extends React.Component {
       setJobsList(response.data.jobs)
 
     } catch (error) {
-      // console.warn(error)
+      this.props.setIsLoading(false)
     }
-
-    setIsLoading(false)
   }
 
 
@@ -60,19 +56,31 @@ class JobsIndex extends React.Component {
 
 
   renderJobsList() {
-    return (
-      <View style={styles.jobsList}>
-        { this.props.jobsList.map(job => {
-          return (
-            <Job
-              job={job}
-              key={uuid()}
-              handlePressJob={this.handlePressJob}
-            />
-          )
-        })}
-      </View>
-    )
+    const { jobsList } = this.props
+
+    if (jobsList.length > 0) {
+      return (
+        <View style={styles.jobsList}>
+          { jobsList.map(job => {
+            return (
+              <Job
+                job={job}
+                key={uuid()}
+                handlePressJob={this.handlePressJob}
+              />
+            )
+          })}
+        </View>
+      )
+    } else {
+      return (
+        <View>
+          <Text>
+            You don't have any jobs
+          </Text>
+        </View>
+      )
+    }
   }
 
   render() {

@@ -13,7 +13,7 @@ class Login extends React.Component {
   constructor() {
     super()
     this.state = {
-      email: 'laney_terry@gmail.com',
+      email: 'rosetta@gmail.com',
       password: 'password',
     }
 
@@ -34,7 +34,7 @@ class Login extends React.Component {
       this.props.setAuthToken(authToken)
 
     } catch (error) {
-      // console.warn(error)
+      this.props.setIsLoading(false)
     }
   }
 
