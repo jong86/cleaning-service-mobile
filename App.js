@@ -36,7 +36,8 @@ class App extends React.Component {
     this.subscription = cable.subscriptions.create('EmployeesChannel', {
       received(data) {
         console.log(data.job.employee_id, 'vs', parent.props)
-        if (true) {
+        // If employee id of the job matches this current user's id
+        if (Number(data.job.employee_id) === Number(parent.props.userData.id)) {
           parent.props.pushToJobsList(data)
         }
       }
