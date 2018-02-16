@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 
 import { action } from '../redux/action.js'
 import { connect } from 'react-redux'
+import JobsIndex from './JobsIndex/JobsIndex.js';
 
 
 class Footer extends React.Component {
@@ -23,13 +24,31 @@ class Footer extends React.Component {
     this.props.setCurrentView('JobsIndex')
   }
 
+  unfinishedJobsCount() {
+    const { jobsList } = this.props
+    let count = 0
+    for (let i = 0; i < jobsList.length; i++) {
+      if (!jobsList[i].time_work_completed) count++
+    }
+    return count
+  }
+
 
   render() {
+    const unfinishedJobsCount = this.unfinishedJobsCount()
+
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.toIndexPage}>
           <View style={styles.button}>
             <Ionicons name="ios-list-box-outline" size={32} color="black" />
+            { unfinishedJobsCount > 0 &&
+              <View style={styles.bubble}>
+                <Text style={styles.bubbleText}>
+                  { unfinishedJobsCount }
+                </Text>
+              </View>
+            }
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={this.logout}>
@@ -46,6 +65,7 @@ class Footer extends React.Component {
 function mapStateToProps(state) {
   return {
     currentView: state.currentView,
+    jobsList: state.jobsList,
   }
 }
 
@@ -70,7 +90,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: 50,
+    height: 48,
     borderTopWidth: 1,
     borderTopColor: 'gainsboro',
     backgroundColor: '#fff',
@@ -82,7 +102,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'steelblue',
     height: '100%',
     padding: 8,
-    width: '25%',
+    width: 48,
     alignItems: 'center',
-  }
+  },
+  bubble: {
+    position: 'absolute',
+    left: 28,
+    top: -4,
+    backgroundColor: 'red',
+    borderRadius: 12,
+    zIndex: 11,
+    padding: 4,
+    height: 24,
+    width: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bubbleText: {
+    color: 'white',
+  },
 });

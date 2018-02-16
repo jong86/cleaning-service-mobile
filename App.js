@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   scrollView: {
     height: '100%',
     width: '100%',
-    marginBottom: 50,
+    marginBottom: 48,
   },
   statusBarSpacer: {
     // Make it the same height as the status bar
