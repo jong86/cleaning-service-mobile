@@ -7,6 +7,8 @@ import store from './redux/store'
 import { action } from './redux/action.js'
 import { connect } from 'react-redux'
 
+import moment from 'moment'
+
 import Footer from './components/Footer.js'
 import Login from './components/Login.js'
 import JobsIndex from './components/JobsIndex/JobsIndex.js'
@@ -28,7 +30,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // this.getAuthTokenFromStorage()
+    this.getAuthTokenFromStorage()
   }
 
   componentDidMount() {
@@ -36,9 +38,18 @@ class App extends React.Component {
     this.subscription = cable.subscriptions.create('EmployeesChannel', {
       received(data) {
         // If employee id of the job matches this current user's id
-        if (Number(data.job.employee_id) === Number(parent.props.userData.id)) {
-          parent.props.pushToJobsList(data.job)
+        if (parent.props.userData && Number(data.job.employee_id) === Number(parent.props.userData.id)) {
+          const { job } = data
+
+          parent.props.pushToJobsList(job)
+
           parent.playNotificationSound()
+
+          Expo.Notifications.presentLocalNotificationAsync({
+            title: "VanCleaning",
+            body: `New Job: ${job.address} at ${moment(job.confirmed_time).format('MMMM Do YYYY, h:mm a')}`,
+            ios: { sound: true },
+          })
         }
       }
     })
