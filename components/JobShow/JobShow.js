@@ -76,6 +76,8 @@ class JobShow extends React.Component {
 
     const job = jobsList.find(job => job.id === jobIdSelected)
 
+    const buttonColor = '#607D8B'
+
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
@@ -133,7 +135,7 @@ class JobShow extends React.Component {
           <Button
             onPress={this.onPressStartJob}
             text="Start Job"
-            color="orange"
+            color={buttonColor}
           />
         }
 
@@ -141,7 +143,7 @@ class JobShow extends React.Component {
           <Button
             onPress={this.onPressCompleteJob}
             text="Finish Job"
-            color="green"
+            color={buttonColor}
           />
         }
 

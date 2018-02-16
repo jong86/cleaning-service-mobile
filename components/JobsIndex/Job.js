@@ -19,9 +19,10 @@ class Job extends React.Component {
     } = this.props.job
 
     if (!timeWorkStarted && !timeWorkCompleted) {
-      return <Ionicons name="ios-alert" size={32} color="red" />
+      // return <Ionicons name="ios-alert-outline" size={32} color="red" />
+      return <Text style={{color: '#03A9F4', fontWeight: 'bold'}}>NEW</Text>
     } else if (timeWorkStarted && !timeWorkCompleted) {
-      return <Ionicons name="ios-time" size={32} color="orange" />
+      return <Ionicons name="ios-time" size={32} color="#FFA726" />
     } else if (timeWorkStarted && timeWorkCompleted) {
       return <Ionicons name="ios-checkmark-circle" size={32} color="green" />
     } else {
@@ -68,9 +69,7 @@ class Job extends React.Component {
           </View>
 
           <View style={styles.jobStatus}>
-            <Text>
-              { this.jobStatus() }
-            </Text>
+            { this.jobStatus() }
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -111,5 +110,6 @@ const styles = StyleSheet.create({
   jobStatus: {
     width: '20%',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -41,7 +41,7 @@ class Footer extends React.Component {
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.toIndexPage}>
           <View style={styles.button}>
-            <Ionicons name="ios-list-box-outline" size={32} color="black" />
+            <Ionicons name="ios-list-box-outline" size={32} color="white" />
             { unfinishedJobsCount > 0 &&
               <View style={styles.bubble}>
                 <Text style={styles.bubbleText}>
@@ -53,7 +53,7 @@ class Footer extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={this.logout}>
           <View style={styles.button}>
-            <Ionicons name="ios-log-out" size={32} color="black" />
+            <Ionicons name="ios-log-out" size={32} color="white" />
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -91,15 +91,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: 48,
-    borderTopWidth: 1,
-    borderTopColor: 'gainsboro',
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    backgroundColor: '#212121'
   },
   button: {
-    backgroundColor: 'steelblue',
+    // backgroundColor: '#212121',
     height: '100%',
     padding: 8,
     width: 48,
