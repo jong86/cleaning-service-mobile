@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(234, 234, 234)',
   },
 });
