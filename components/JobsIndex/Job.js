@@ -54,7 +54,7 @@ class Job extends React.Component {
                 Time
               </Text>
               <Text style={styles.content}>
-                { moment(job.confirmed_time).format('MMMM Do YYYY, h:mm:ss a') }
+                { moment(job.confirmed_time).format('MMMM Do YYYY, h:mm a') }
               </Text>
             </View>
 
@@ -107,9 +107,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: 48,
     textAlign: 'right',
+    fontSize: 12,
   },
   content: {
     marginLeft: 8,
+    fontSize: 12,
   },
   jobStatus: {
     width: '16%',
