@@ -36,7 +36,6 @@ class JobShow extends React.Component {
     const { jobIdSelected } = this.props
     const timeNow = new Date().toISOString()
 
-    alert(`You are starting job #${jobIdSelected} at ${this.formatDate(timeNow)}`)
     this.patchJob('time_work_started', timeNow)
   }
 
@@ -45,7 +44,6 @@ class JobShow extends React.Component {
     const { jobIdSelected } = this.props
     const timeNow = new Date().toISOString()
 
-    alert(`You finished job #${jobIdSelected} at ${this.formatDate(timeNow)}`)
     this.patchJob('time_work_completed', timeNow)
   }
 
