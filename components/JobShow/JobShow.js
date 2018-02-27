@@ -54,7 +54,7 @@ class JobShow extends React.Component {
     const { jobIdSelected, authToken, updateJobState } = this.props
     try {
       const config = { headers: { Authorization: authToken } }
-      const request = axios.patch(`http://192.168.1.69:3000/employee/jobs/${jobIdSelected}`, {
+      const request = axios.patch(`http://localhost:3000/employee/jobs/${jobIdSelected}`, {
         [column]: newValue,
       }, config)
 

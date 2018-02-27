@@ -13,7 +13,7 @@ class Login extends React.Component {
   constructor() {
     super()
     this.state = {
-      email: 'lila@yahoo.com',
+      email: 'fake@employee.com',
       password: 'password',
     }
 
@@ -24,7 +24,7 @@ class Login extends React.Component {
     this.props.setIsLoading(true)
 
     try {
-      const request = axios.post('http://192.168.1.69:3000/authenticate', {
+      const request = axios.post('http://localhost:3000/authenticate', {
         email: this.state.email,
         password: this.state.password,
       })

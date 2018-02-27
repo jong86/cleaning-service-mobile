@@ -16,7 +16,7 @@ import JobShow from './components/JobShow/JobShow.js'
 import Loading from './components/Loading.js'
 
 import ActionCable from 'react-native-actioncable'
-const cable = ActionCable.createConsumer('ws://192.168.1.69:3000/cable')
+const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 
 class App extends React.Component {
   constructor() {

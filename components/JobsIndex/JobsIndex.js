@@ -33,7 +33,7 @@ class JobsIndex extends React.Component {
 
     try {
       const config = { headers: { Authorization: authToken } }
-      const request = axios.get('http://192.168.1.69:3000/employee/jobs', config)
+      const request = axios.get('http://localhost:3000/employee/jobs', config)
       const response = await request
 
       setJobsList(response.data.jobs)
